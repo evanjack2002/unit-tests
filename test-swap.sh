@@ -5,6 +5,7 @@ echo r >> _tmp.gdb
 echo source scripts/create_list.gdb >> _tmp.gdb
 echo source scripts/printf_list.gdb >> _tmp.gdb
 echo source scripts/find_node_address.gdb >> _tmp.gdb
+echo 'source scripts/free_list.gdb' >> _tmp.gdb
 
 echo 'set $head = (List*)0' >> _tmp.gdb
 echo 'set $node1 = (List*)0' >> _tmp.gdb
@@ -18,7 +19,7 @@ exec < $1
 echo ' '>>$2
 echo 'set logging file '$2 >> _tmp.gdb
 
-while (read var) 
+while read var
 do
 	read var
 	node_1=$var
@@ -39,6 +40,7 @@ do
 	echo 'p "new_list"' >> _tmp.gdb
 	echo 'printf_list $head' >> _tmp.gdb
 	echo 'set logging off' >> _tmp.gdb
+	echo 'free_list $head' >> _tmp.gdb
 done
 
 gdb -q -x _tmp.gdb bin-swap >> /dev/null

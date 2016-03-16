@@ -13,9 +13,8 @@ echo 'set logging file '$2>>_tmp.gdb
 echo ' '>>$2
 exec < $1
 
-while  (read var) 
+while read var
 do
-	read var
 	list_length=$var
 
 	echo 'create_list (*($head)) '$list_length >> _tmp.gdb
@@ -29,6 +28,7 @@ do
 		echo 'p $_head->value = '$value >> _tmp.gdb
 		echo 'p $_head = $_head->next' >> _tmp.gdb
 	done
+	read var
 
 	echo 'set logging on' >> _tmp.gdb
 	echo 'p "test begin"' >> _tmp.gdb

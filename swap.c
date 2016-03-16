@@ -18,7 +18,7 @@ List *swap(List *head, List *node_1, List *node_2)
     int num_pre_node_1_and_node_2 = 0;
 
     List *_head = head;
-    List *pre_node_1,*pre_node_2,*tmp_node;
+    List *pre_node_1 = NULL,*pre_node_2 = NULL,*tmp_node = NULL;
 
     while (head && head->next) {
         if (head->next == node_1) {

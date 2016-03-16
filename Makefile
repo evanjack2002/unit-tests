@@ -18,6 +18,7 @@ bin-%: %.o stub.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 check: $(EXEC)
+	@rm -f result-*
 	bash test-swap.sh data-swap.in result-swap
 	bash test-bubble.sh data-bubble.in result-bubble
 
