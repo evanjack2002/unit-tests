@@ -19,11 +19,11 @@ do
 
 	echo 'create_list (*($head)) '$list_length >> _tmp.gdb
 	read var
-	list_value=($var)
+	list_value=$var
 
 	echo 'set $_head = (*($head))' >> _tmp.gdb
 
-	for value in "${list_value[@]}"
+	for value in ${list_value[@]}
 	do
 		echo 'p $_head->value = '$value >> _tmp.gdb
 		echo 'p $_head = $_head->next' >> _tmp.gdb
