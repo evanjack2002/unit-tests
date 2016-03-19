@@ -1,49 +1,62 @@
 /* FIXME : introduce elegant ways to reuse */
 #include "swap.c"
 
-void merge_sort(List **head, int length)
+List *find_node(List *head, int index)
 {
-    if (head == NULL || (*head == NULL))
-        return;
-
-    int num_list = 0;
+    List *p = head;
     int i = 0;
-    int sub_i;
-    int sub_for_times;
-    int sub_for_Max;
-    List **pre_sub_head = head;
-    List *sub_head;
 
-    sub_head = *head;
+    while (i < index) {
+        p = p->next;
+        i++;
+    }
+    return p;
+}
 
-    for (; sub_head && sub_head->next;) {
-        if (sub_head->value > sub_head->next->value) {
-            sub_head = swap(sub_head,sub_head,sub_head->next);
-            *pre_sub_head = sub_head;
-        }
+void merge_sort(List *head_l, List *head_r, int length_l, int length_r)
+{
+    int i, j;
+    int tmp;
+    List *pre;
+    List *l = head_l;
+    List *r = head_r;
 
-        num_list = num_list + 1;
-        pre_sub_head = &((*pre_sub_head)->next);
-        sub_head = sub_head->next;
+    if(length_l > 1) {
+        i = length_l / 2;
+        j = length_l - i;
+        r = find_node(head_l, i);
+        merge_sort(head_l, r, i, j);
     }
 
-    sub_for_times = num_list - 1;
+    if(length_r > 1) {
+        i = length_r / 2;
+        j = length_r - i;
+        r = find_node(head_r, i);
+        merge_sort(head_r, r, i, j);
+    }
 
-    for (; i < sub_for_times; i++) {
-        sub_head = *head;
-        sub_for_Max = num_list - (i + 1);
-        pre_sub_head = head;
-        for (sub_i = 0; sub_head && sub_head->next && (sub_i < sub_for_Max);
-             sub_i++) {
-            if (sub_head->value > sub_head->next->value) {
-                sub_head = swap(sub_head,sub_head,sub_head->next);
-                *pre_sub_head = sub_head;
+    if ((length_l >= 1) || (length_r >= 1)) {
+        for(i = 0; i < length_l; i++) {
+            tmp = l->value;
+            r = head_r;
+            pre = NULL;
+            for(j = 0; j < length_r; j++) {
+                if(!pre) {
+                    if (tmp > r->value) {
+                        pre = r;
+                        l->value = r->value;
+                        r->value = tmp;
+                    }
+                } else {
+                    if (tmp > r->value) {
+                        pre->value = r->value;
+                        r->value = tmp;
+                        pre = r;
+                    }
+                }
+                r = r->next;
             }
-
-            pre_sub_head = &((*pre_sub_head)->next);
-            sub_head = sub_head->next;
+            l = l->next;
         }
     }
-
-    return;
 }
