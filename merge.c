@@ -35,11 +35,11 @@ void merge_sort(List *head_l, List *head_r, int length_l, int length_r)
         merge_sort(head_r, r, i, j);
     }
 
-    if ((length_l >= 1) || (length_r >= 1)) {
+    if ((length_l >= 1) && (length_r >= 1)) {
         for(i = 0; i < length_l; i++) {
             tmp = l->value;
-            r = head_r;
             pre = NULL;
+            r = head_r;
             for(j = 0; j < length_r; j++) {
                 if(!pre) {
                     if (tmp > r->value) {
